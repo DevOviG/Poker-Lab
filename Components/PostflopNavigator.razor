@@ -1,0 +1,72 @@
+@namespace PokerLabBlazor.Components
+@using PokerLabBlazor.Logic
+
+<div class="bg-slate-100 py-12 border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center uppercase tracking-wider">Postflop Navigator</h2>
+
+        <div class="grid md:grid-cols-12 gap-6">
+            <div class="md:col-span-4 space-y-6">
+                <div class="bg-white p-4 rounded shadow-sm">
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pot Type</label>
+                    <div class="flex gap-1 bg-slate-100 p-1 rounded">
+                        <button class="flex-1 py-2 text-xs font-bold rounded @(potType == "srp" ? "bg-white shadow text-slate-800" : "text-slate-500")"
+                                @onclick='() => potType = "srp"'>Single Raised</button>
+                        <button class="flex-1 py-2 text-xs font-bold rounded @(potType == "3bet" ? "bg-slate-800 text-white" : "text-slate-500")"
+                                @onclick='() => potType = "3bet"'>3-Bet Pot</button>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded shadow-sm">
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Your Role</label>
+                    <div class="space-y-2">
+                        <button class="w-full py-2 px-3 text-left text-sm font-bold rounded border @(role == "aggressor" ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-600 border-slate-200")"
+                                @onclick='() => role = "aggressor"'>Aggressor (PFR)</button>
+                        <button class="w-full py-2 px-3 text-left text-sm font-bold rounded border @(role == "defender" ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-600 border-slate-200")"
+                                @onclick='() => role = "defender"'>Defender (Caller)</button>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded shadow-sm">
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Board Texture</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        @foreach (var t in new[] { "dry", "wet", "mono", "paired" })
+                        {
+                            <button class="py-2 text-xs font-bold rounded border uppercase @(texture == t ? "bg-slate-800 text-white border-slate-800" : "bg-white text-slate-600 border-slate-200")"
+                                    @onclick="() => texture = t">@t</button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-8">
+                @{ var advice = Postflop.GetAdvice(potType, role, texture); }
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 h-full flex flex-col overflow-hidden">
+                    <div class="bg-slate-800 text-white px-6 py-4 flex justify-between items-center">
+                        <h3 class="font-bold tracking-wide">Strategy Card</h3>
+                        <span class="px-2 py-1 text-xs font-bold rounded text-white @advice.BadgeClass">@advice.Badge</span>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col justify-center">
+                        <h4 class="text-2xl font-bold text-slate-800 mb-4">@advice.Headline</h4>
+                        <p class="text-slate-600 text-lg mb-6">@advice.Body</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="p-4 bg-slate-50 rounded border border-slate-100">
+                                <div class="text-xs font-bold text-slate-400 uppercase">Action</div>
+                                <div class="text-xl font-bold text-emerald-600">@advice.Action</div>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded border border-slate-100">
+                                <div class="text-xs font-bold text-slate-400 uppercase">Frequency</div>
+                                <div class="text-xl font-bold text-slate-700">@advice.Freq</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string potType = "srp";
+    private string role = "aggressor";
+    private string texture = "dry";
+}

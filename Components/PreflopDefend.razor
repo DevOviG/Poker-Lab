@@ -1,0 +1,126 @@
+@using PokerLabBlazor.Logic
+
+<div class="flex flex-col items-center justify-center p-6 bg-slate-50 border-b border-slate-200 border-t">
+    <h1 class="text-3xl font-bold text-slate-800 mb-4 uppercase tracking-wider">Defense Engine</h1>
+    
+    <div class="flex flex-wrap justify-center gap-2 bg-slate-200 p-2 rounded-lg max-w-3xl">
+        @foreach (var s in scenarios)
+        {
+            <button class="px-3 py-2 rounded text-xs font-bold transition-all uppercase @GetButtonClass(s.Key)"
+                    @onclick="() => SetScenario(s.Key)">
+                @s.Label
+            </button>
+        }
+    </div>
+</div>
+
+<div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto p-6 items-start">
+    <div class="w-full lg:w-2/3">
+        <div class="grid grid-cols-[repeat(13,1fr)] gap-[1px] bg-slate-300 p-[2px] rounded shadow-sm max-w-[600px] mx-auto">
+            @for (int row = 0; row < 13; row++)
+            {
+                @for (int col = 0; col < 13; col++)
+                {
+                    int r = row; int c = col;
+                    string hand = Core.GetHandName(r, c);
+                    
+                    // Get Action from Logic
+                    string action = Preflop.GetDefendAction(hand, currentScenario);
+                    
+                    <div class="aspect-square flex items-center justify-center text-[10px] sm:text-xs font-bold cursor-pointer transition hover:scale-110 border border-transparent 
+                                @GetColorClass(action)"
+                         @onclick="() => SelectHand(hand, action)">
+                        @hand
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/3 space-y-4">
+        <div class="bg-slate-800 text-white p-6 rounded-lg shadow-lg border-l-4 border-emerald-500 min-h-[150px]">
+            @if (string.IsNullOrEmpty(selectedHand))
+            {
+                <p class="text-slate-400 italic">Click a hand to see defense strategy...</p>
+            }
+            else
+            {
+                <h2 class="text-2xl font-bold text-emerald-400 mb-2">@selectedHand</h2>
+                @if (selectedAction == "val")
+                {
+                    <p class="text-lg text-red-400 font-bold">VALUE 3-BET</p>
+                    <p class="text-slate-400 text-sm mt-2">Re-raise for value. Happy to get it all-in.</p>
+                }
+                else if (selectedAction == "bluff")
+                {
+                    <p class="text-lg text-indigo-400 font-bold">BLUFF 3-BET</p>
+                    <p class="text-slate-400 text-sm mt-2">Re-raise as a bluff. Fold if they 4-bet.</p>
+                }
+                else if (selectedAction == "call")
+                {
+                    <p class="text-lg text-amber-400 font-bold">CALL</p>
+                    <p class="text-slate-400 text-sm mt-2">Too strong to fold, too weak to raise. See a flop.</p>
+                }
+                else
+                {
+                    <p class="text-lg text-slate-400 font-bold">FOLD</p>
+                }
+            }
+        </div>
+
+        <div class="bg-white p-4 rounded border border-slate-200 space-y-2">
+            <h3 class="font-bold text-slate-700 text-sm uppercase mb-2">Legend</h3>
+            <div class="flex items-center gap-2"><div class="w-4 h-4 bg-red-500 rounded"></div><span class="text-xs font-bold">Value 3-Bet</span></div>
+            <div class="flex items-center gap-2"><div class="w-4 h-4 bg-indigo-500 rounded"></div><span class="text-xs font-bold">Bluff 3-Bet</span></div>
+            <div class="flex items-center gap-2"><div class="w-4 h-4 bg-amber-500 rounded"></div><span class="text-xs font-bold">Call</span></div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string currentScenario = "BB_VS_UTG";
+    private string selectedHand = "";
+    private string selectedAction = "";
+
+    // Define our buttons list
+    private List<(string Key, string Label)> scenarios = new()
+    {
+        ("HJ_VS_UTG", "HJ vs UTG"),
+        ("CO_VS_UTG", "CO vs UTG"),
+        ("BTN_VS_UTG", "BTN vs UTG"),
+        ("BB_VS_UTG", "BB vs UTG"),
+        ("BTN_VS_CO", "BTN vs CO"),
+        ("BB_VS_CO", "BB vs CO"),
+        ("SB_VS_BTN", "SB vs BTN"),
+        ("BB_VS_BTN", "BB vs BTN"),
+        ("BB_VS_SB", "BB vs SB")
+    };
+
+    private void SetScenario(string s)
+    {
+        currentScenario = s;
+        selectedHand = "";
+    }
+
+    private void SelectHand(string hand, string action)
+    {
+        selectedHand = hand;
+        selectedAction = action;
+    }
+
+    private string GetButtonClass(string s)
+    {
+        return currentScenario == s ? "bg-slate-800 text-white" : "bg-white text-slate-700 hover:bg-slate-100";
+    }
+
+    private string GetColorClass(string action)
+    {
+        return action switch
+        {
+            "val" => "bg-red-500 text-white",     // Value 3-Bet
+            "bluff" => "bg-indigo-500 text-white", // Bluff 3-Bet
+            "call" => "bg-amber-500 text-white",   // Call
+            _ => "bg-white text-slate-300"         // Fold
+        };
+    }
+}
