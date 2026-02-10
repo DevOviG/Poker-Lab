@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "PokerLabBlazor",
   "resources": {
-    "hash": "sha256-ru9U2U6I+8gUvaHLYaGEFNBzK9sfLDTdjdOTkCj2EvI=",
+    "hash": "sha256-5rqNCS40qWH1Ud8P8Oyt9kLd1CrLti3a5LIwsrgf0BY=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Components.86emdeh3mn.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.nl4zcw382h.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
@@ -34,7 +34,7 @@
       "System.Text.Json.jjhatov2mh.wasm": "System.Text.Json.wasm",
       "System.Text.RegularExpressions.k0eu65ve7y.wasm": "System.Text.RegularExpressions.wasm",
       "System.Private.CoreLib.tj1r3dimui.wasm": "System.Private.CoreLib.wasm",
-      "PokerLabBlazor.4q6rax829i.wasm": "PokerLabBlazor.wasm",
+      "PokerLabBlazor.5njslai82z.wasm": "PokerLabBlazor.wasm",
       "dotnet.js": "dotnet.js",
       "dotnet.native.uhsveqo9bs.js": "dotnet.native.js",
       "dotnet.native.swgexbmoy7.wasm": "dotnet.native.wasm",
@@ -91,7 +91,7 @@
       "System.Text.Encodings.Web.suy6578t21.wasm": "sha256-9FZLttu5iPwF9M7jckzJNogrhKhsHb9VlRtzW9+OH44=",
       "System.Text.Json.jjhatov2mh.wasm": "sha256-sXuIXXV6GDrgOHS7hgPVUT0qP7QuwAvYcUwGzYyxrY0=",
       "System.Text.RegularExpressions.k0eu65ve7y.wasm": "sha256-dAw+dIKra7ljgRE+eVWL5wTVKKXPJi7x/AdHfLLcFDs=",
-      "PokerLabBlazor.4q6rax829i.wasm": "sha256-NDcneGnLG1XNL/MX/7dpUUnzaG+xr2vq4gv3BRQ9TAw="
+      "PokerLabBlazor.5njslai82z.wasm": "sha256-cQ94XO4sxQsAucwzGwvFJmxbbsiT47CV4TPe2XskdHs="
     }
   },
   "cacheBootResources": true,
