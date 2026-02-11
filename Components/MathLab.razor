@@ -1,20 +1,65 @@
+@using PokerLabBlazor.Logic
+
 <div class="bg-white py-12 border-t border-slate-200">
     <div class="max-w-4xl mx-auto px-6">
         <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center uppercase tracking-wider">The Math Lab</h2>
         
+        <div class="bg-slate-800 text-white p-8 rounded-xl shadow-lg mb-8">
+            <h3 class="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+                <span>⚔️</span> Preflop Equity Calculator
+            </h3>
+
+            <div class="flex flex-col md:flex-row items-center gap-4 mb-8">
+                <div class="flex-1 w-full">
+                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Hero</label>
+                    <input type="text" @bind="hand1" placeholder="AKs" 
+                           class="w-full text-center text-2xl font-bold bg-slate-700 border-none rounded py-3 uppercase text-white placeholder-slate-500 focus:ring-2 focus:ring-emerald-500" />
+                </div>
+
+                <div class="text-2xl font-bold text-slate-500">VS</div>
+
+                <div class="flex-1 w-full">
+                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Villain</label>
+                    <input type="text" @bind="hand2" placeholder="QQ" 
+                           class="w-full text-center text-2xl font-bold bg-slate-700 border-none rounded py-3 uppercase text-white placeholder-slate-500 focus:ring-2 focus:ring-emerald-500" />
+                </div>
+            </div>
+
+            <button @onclick="CalculateEquity" 
+                    class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-lg transition-all shadow-lg mb-6 active:scale-95">
+                RUN CALCULATION
+            </button>
+
+            <div class="h-12 w-full bg-slate-900 rounded-full overflow-hidden flex relative border border-slate-700">
+                <div class="h-full bg-emerald-500 flex items-center justify-center transition-all duration-700 ease-out" style="width: @(resultWin)%">
+                    @if(resultWin > 10) { <span class="font-bold text-sm">@Math.Round(resultWin, 0)%</span> }
+                </div>
+                <div class="h-full bg-slate-600 flex items-center justify-center transition-all duration-700 ease-out" style="width: @(100 - resultWin)%">
+                    @if(resultWin < 90) { <span class="font-bold text-sm text-slate-300">@Math.Round(100 - resultWin, 0)%</span> }
+                </div>
+                
+                <div class="absolute top-0 bottom-0 left-1/2 w-0.5 bg-black/20"></div>
+            </div>
+            
+            <div class="flex justify-between mt-2 text-xs font-bold text-slate-400 uppercase">
+                <span>Win</span>
+                <span>Loss</span>
+            </div>
+        </div>
+
         <div class="grid md:grid-cols-2 gap-8">
             <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                <h3 class="text-xl font-bold text-slate-700 mb-4">Equity (Rule of 2 & 4)</h3>
+                <h3 class="text-xl font-bold text-slate-700 mb-4">Outs (Rule of 4)</h3>
                 <label class="block text-sm text-slate-500 mb-2">Outs: <span class="font-bold text-emerald-600 text-lg">@outs</span></label>
                 <input type="range" min="1" max="20" @bind="outs" @bind:event="oninput" class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-emerald-600 mb-6">
                 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="p-4 bg-white rounded shadow-sm text-center">
-                        <div class="text-xs font-bold text-slate-400 uppercase">Next Card</div>
+                        <div class="text-xs font-bold text-slate-400 uppercase">Flop -> Turn</div>
                         <div class="text-3xl font-bold text-slate-800">@(outs * 2)%</div>
                     </div>
                     <div class="p-4 bg-emerald-50 rounded shadow-sm text-center border border-emerald-100">
-                        <div class="text-xs font-bold text-emerald-600 uppercase">River (All-in)</div>
+                        <div class="text-xs font-bold text-emerald-600 uppercase">Flop -> River</div>
                         <div class="text-3xl font-bold text-emerald-600">@(outs * 4)%</div>
                     </div>
                 </div>
@@ -35,9 +80,7 @@
                 
                 <div class="text-center mt-6">
                     <div class="text-xs text-slate-400 uppercase">Required Equity</div>
-                    <div class="text-4xl font-bold text-slate-800">
-                        @GetPotOdds()%
-                    </div>
+                    <div class="text-4xl font-bold text-slate-800">@GetPotOdds()%</div>
                 </div>
             </div>
         </div>
@@ -45,9 +88,23 @@
 </div>
 
 @code {
+    // --- Equity State ---
+    private string hand1 = "AKs";
+    private string hand2 = "QQ";
+    private double resultWin = 46.0; // Default visualization
+
+    // --- Math Lab State (Existing) ---
     private int outs = 9;
     private double potSize = 100;
     private double callSize = 50;
+
+    private void CalculateEquity()
+    {
+        // Simple validation
+        if (string.IsNullOrEmpty(hand1) || string.IsNullOrEmpty(hand2)) return;
+        
+        resultWin = Equity.Calculate(hand1.ToUpper(), hand2.ToUpper());
+    }
 
     private string GetPotOdds()
     {
