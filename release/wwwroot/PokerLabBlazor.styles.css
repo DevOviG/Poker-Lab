@@ -83,7 +83,7 @@ main[b-4famaaucce] {
 
 .top-row[b-0qos5i9fn4] {
     min-height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .navbar-brand[b-0qos5i9fn4] {
@@ -117,30 +117,30 @@ main[b-4famaaucce] {
     padding-bottom: 0.5rem;
 }
 
-    .nav-item:first-of-type[b-0qos5i9fn4] {
-        padding-top: 1rem;
-    }
+.nav-item:first-of-type[b-0qos5i9fn4] {
+    padding-top: 1rem;
+}
 
-    .nav-item:last-of-type[b-0qos5i9fn4] {
-        padding-bottom: 1rem;
-    }
+.nav-item:last-of-type[b-0qos5i9fn4] {
+    padding-bottom: 1rem;
+}
 
-    .nav-item[b-0qos5i9fn4]  a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-    }
+.nav-item[b-0qos5i9fn4]  a {
+    color: #d7d7d7;
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+}
 
 .nav-item[b-0qos5i9fn4]  a.active {
-    background-color: rgba(255,255,255,0.37);
+    background-color: rgba(255, 255, 255, 0.37);
     color: white;
 }
 
 .nav-item[b-0qos5i9fn4]  a:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
 
@@ -158,5 +158,37 @@ main[b-4famaaucce] {
         /* Allow sidebar to scroll for tall menus */
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
+    }
+
+    /* 1. FORCE the container to be a Flexbox */
+    .nav-item .nav-link[b-0qos5i9fn4] {
+        display: flex !important;
+        /* Ignore default block behavior */
+        align-items: center !important;
+        /* Force vertical centering */
+        gap: 1.5rem;
+        /* Consistent gap between icon and text */
+        height: 3rem;
+        /* Fixed height for the button */
+        padding-left: 1.5rem;
+        /* Consistent left padding */
+    }
+
+    /* 2. FORCE the Icon to behave */
+    .nav-item .nav-link span[b-0qos5i9fn4] {
+        display: flex;
+        /* Allows us to center the SVG inside the span */
+        align-items: center;
+        justify-content: center;
+
+        font-size: 1.5rem !important;
+        /* Force same size for both icons */
+        width: 2rem;
+        /* Fixed width so text aligns vertically */
+        height: 2rem;
+        line-height: 1;
+        /* Remove text spacing issues */
+        margin: 0;
+        /* Kill any default margins */
     }
 }
