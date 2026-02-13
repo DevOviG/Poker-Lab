@@ -1,0 +1,92 @@
+@page "/trainer"
+
+<PageTitle>Range Trainer</PageTitle>
+
+<div class="flex flex-col items-center justify-center pt-6 pb-4 bg-slate-50 border-b border-slate-200">
+    <h1 class="text-3xl font-bold text-slate-800 mb-4 uppercase tracking-wider">Range Trainer</h1>
+    
+    <div class="flex gap-2 bg-slate-200 p-1 rounded-lg shadow-sm">
+        @foreach (var pos in Positions)
+        {
+            <button class="px-4 py-2 rounded text-sm font-bold transition-all @GetButtonClass(pos)"
+                    @onclick="() => ChangePosition(pos)">
+                @pos
+            </button>
+        }
+    </div>
+</div>
+
+<div class="flex flex-col lg:flex-row justify-between gap-16 max-w-6xl mx-auto p-6 items-start">
+    
+    <div class="w-full lg:w-auto flex-grow-0">
+        <div class="grid grid-cols-[repeat(13,1fr)] gap-[2px] bg-slate-300 p-[2px] rounded shadow-sm select-none">
+            @for (int row = 0; row < 13; row++)
+            {
+                @for (int col = 0; col < 13; col++)
+                {
+                    var hand = GetHand(row, col);
+                    var cssClass = GetResultClass(hand);
+
+                    <div class="aspect-square flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition hover:brightness-95 @cssClass"
+                         style="width: 42px; height: 42px;" 
+                         @onclick="() => ToggleHand(hand)">
+                        @hand
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    
+    <div class="w-full lg:w-80 flex flex-col gap-6 sticky top-6">
+        
+        <div class="bg-white p-5 rounded-xl shadow-lg border border-slate-100">
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Goal</h3>
+            <p class="text-slate-700 mb-4 font-medium">
+                Paint the <span class="font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">@CurrentPosition</span> Opening Range.
+            </p>
+            
+            <div class="flex flex-col gap-2 text-xs font-bold text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                @if (!IsChecked)
+                {
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 bg-blue-500 rounded text-white shadow-sm"></div> Selected</div>
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 bg-white border border-slate-300 rounded shadow-sm"></div> Empty</div>
+                }
+                else
+                {
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 bg-emerald-500 rounded shadow-sm"></div> Correct</div>
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 bg-red-500 rounded shadow-sm"></div> Wrong</div>
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 bg-yellow-400 rounded shadow-sm"></div> Missed</div>
+                }
+            </div>
+        </div>
+
+        <div class="bg-slate-800 p-5 rounded-xl shadow-lg border-t-4 border-blue-500 text-center">
+            @if (!IsChecked)
+            {
+                <div class="text-slate-400 mb-4 text-xs font-medium uppercase tracking-wide">Ready?</div>
+                <button class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-bold text-md shadow-md transition-all active:scale-95" 
+                        @onclick="CheckAnswer">
+                    Check Answer
+                </button>
+            }
+            else
+            {
+                <div class="animate-pulse-once">
+                    <div class="text-slate-400 text-xs uppercase tracking-wide mb-1">Score</div>
+                    <div class="text-5xl font-black mb-5 @ScoreColorClass">
+                        @Score%
+                    </div>
+                    
+                    <button class="w-full bg-white text-slate-900 hover:bg-slate-100 py-3 rounded-lg font-bold text-md shadow transition-all flex items-center justify-center gap-2" 
+                            @onclick="Reset">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                        </svg>
+                        Try Again
+                    </button>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
