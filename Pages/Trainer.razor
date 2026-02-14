@@ -16,10 +16,10 @@
     </div>
 </div>
 
-<div class="flex flex-col lg:flex-row justify-between gap-16 max-w-6xl mx-auto p-6 items-start">
+<div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto p-6 items-start">
     
-    <div class="w-full lg:w-auto flex-grow-0">
-        <div class="grid grid-cols-[repeat(13,1fr)] gap-[2px] bg-slate-300 p-[2px] rounded shadow-sm select-none">
+    <div class="w-full lg:w-2/3">
+        <div class="grid grid-cols-[repeat(13,1fr)] gap-[2px] bg-slate-300 p-[2px] rounded shadow-sm select-none max-w-[600px] mx-auto">
             @for (int row = 0; row < 13; row++)
             {
                 @for (int col = 0; col < 13; col++)
@@ -27,8 +27,7 @@
                     var hand = GetHand(row, col);
                     var cssClass = GetResultClass(hand);
 
-                    <div class="aspect-square flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition hover:brightness-95 @cssClass"
-                         style="width: 42px; height: 42px;" 
+                    <div class="aspect-square flex items-center justify-center text-[10px] sm:text-xs font-bold cursor-pointer transition hover:scale-110 border border-transparent @cssClass"
                          @onclick="() => ToggleHand(hand)">
                         @hand
                     </div>
