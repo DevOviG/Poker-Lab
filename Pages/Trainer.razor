@@ -20,9 +20,9 @@
     
     <div class="w-full lg:w-2/3">
         <div class="grid grid-cols-[repeat(13,1fr)] gap-[1px] bg-slate-300 p-[2px] rounded shadow-sm select-none max-w-[600px] mx-auto"
-             @onpointerdown="() => isMouseDown = true"
-             @onpointerup="() => isMouseDown = false"
-             @onpointerleave="() => isMouseDown = false">
+             @onmousedown="() => isMouseDown = true"
+             @onmouseup="() => isMouseDown = false"
+             @onmouseleave="() => isMouseDown = false">
             @for (int row = 0; row < 13; row++)
             {
                 @for (int col = 0; col < 13; col++)
@@ -32,7 +32,7 @@
 
                     <div class="aspect-square flex items-center justify-center text-[10px] sm:text-xs font-bold cursor-pointer transition hover:scale-110 border border-transparent @cssClass"
                          @onmousedown="() => ToggleHand(hand)"
-                         @onpointerenter="() => { if (isMouseDown) ToggleHand(hand); }">
+                         @onmouseover="() => { if (isMouseDown) ToggleHand(hand); }">
                         @hand
                     </div>
                 }
@@ -94,7 +94,7 @@
     </div>
 </div>
 
-@code 
+@code
 {
     private bool isMouseDown = false;
 }
