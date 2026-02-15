@@ -9,24 +9,29 @@
 
 <div class="@NavMenuCssClass nav-scrollable">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link d-flex align-items-center" href="" Match="NavLinkMatch.All" style="display: flex !important; align-items: center !important;">
-                <span class="bi bi-mortarboard-fill me-3" aria-hidden="true" style="font-size: 1.25rem; display: flex; align-items: center;"></span> 
-                <span style="display: flex; align-items: center;">Learn</span>
+        <div class="nav-item px-3 mb-2">
+            <NavLink class="nav-link d-flex align-items-center" href="" Match="NavLinkMatch.All" 
+                     style="padding: 0.75rem 1rem; display: flex !important; align-items: center !important;">
+                <span class="bi bi-mortarboard-fill me-3" aria-hidden="true" 
+                      style="font-size: 1.4rem; min-width: 1.5rem; display: flex; align-items: center;"></span> 
+                <span style="font-size: 1.1rem; font-weight: 500;">Learn</span>
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link d-flex align-items-center" href="trainer" style="display: flex !important; align-items: center !important;">
-                <span class="bi bi-controller me-3" aria-hidden="true" style="font-size: 1.25rem; display: flex; align-items: center;"></span> 
-                <span style="display: flex; align-items: center;">Practice</span>
+            <NavLink class="nav-link d-flex align-items-center" href="trainer" 
+                     style="padding: 0.75rem 1rem; display: flex !important; align-items: center !important;">
+                <span class="bi bi-controller me-3" aria-hidden="true" 
+                      style="font-size: 1.4rem; min-width: 1.5rem; display: flex; align-items: center;"></span> 
+                <span style="font-size: 1.1rem; font-weight: 500;">Practice</span>
             </NavLink>
         </div>
     </nav>
 </div>
 
 @code {
-    // Setting this to false forces the menu to be VISIBLE on desktop by default
+    // Keep as false so it's visible on Desktop. 
+    // This makes it open by default on mobile too.
     private bool collapseNavMenu = false;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
