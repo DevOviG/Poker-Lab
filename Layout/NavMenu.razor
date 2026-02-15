@@ -7,30 +7,29 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable d-md-block">
+<div class="@NavMenuCssClass nav-scrollable">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link d-flex align-items-center" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-mortarboard-fill me-3" aria-hidden="true" 
-                      style="font-size: 1.25rem; line-height: 1; display: inline-flex; align-items: center;">
-                </span> 
-                <span style="line-height: 1;">Learn</span>
+            <NavLink class="nav-link d-flex align-items-center" href="" Match="NavLinkMatch.All" style="display: flex !important; align-items: center !important;">
+                <span class="bi bi-mortarboard-fill me-3" aria-hidden="true" style="font-size: 1.25rem; display: flex; align-items: center;"></span> 
+                <span style="display: flex; align-items: center;">Learn</span>
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link d-flex align-items-center" href="trainer">
-                <span class="bi bi-controller me-3" aria-hidden="true" 
-                      style="font-size: 1.25rem; line-height: 1; display: inline-flex; align-items: center;">
-                </span> 
-                <span style="line-height: 1;">Practice</span>
+            <NavLink class="nav-link d-flex align-items-center" href="trainer" style="display: flex !important; align-items: center !important;">
+                <span class="bi bi-controller me-3" aria-hidden="true" style="font-size: 1.25rem; display: flex; align-items: center;"></span> 
+                <span style="display: flex; align-items: center;">Practice</span>
             </NavLink>
         </div>
     </nav>
 </div>
 
 @code {
+    // Setting this to false forces the menu to be VISIBLE on desktop by default
     private bool collapseNavMenu = false;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
