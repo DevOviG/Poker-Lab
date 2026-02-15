@@ -25,19 +25,9 @@
     </nav>
 </div>
 
-<style>
-    /* Force visibility on Desktop (Medium screens 768px and up) */
-    @@edia (min-width: 768px) {
-        .poker-nav {
-            display: block !important;
-        }
-    }
-</style>
-
 @code {
     private bool collapseNavMenu = true;
 
-    // We only use the 'collapse' class on mobile
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
